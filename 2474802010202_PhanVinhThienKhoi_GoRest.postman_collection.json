@@ -17,19 +17,19 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "\r",
                   "pm.test(\"Status code is 201\", function () {\r",
                   "    pm.response.to.have.status(201);\r",
                   "});\r",
                   "\r",
-                  "const data = pm.response.json();\r",
+                  "if (pm.response.code === 201) {\r",
+                  "    const userResponse = pm.response.json();\r",
                   "\r",
-                  "pm.test(\"Response contains user ID\", function () {\r",
-                  "    pm.expect(data.id).to.exist;\r",
-                  "});\r",
+                  "    pm.test(\"Response contains user ID\", function () {\r",
+                  "        pm.expect(userResponse.id).to.exist;\r",
+                  "    });\r",
                   "\r",
-                  "pm.environment.set(\"userId\", data.id);\r",
-                  ""
+                  "    pm.environment.set(\"userId\", userResponse.id);\r",
+                  "}"
                 ],
                 "type": "text/javascript",
                 "packages": {},
